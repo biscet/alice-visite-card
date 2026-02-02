@@ -173,11 +173,14 @@
 }
 
 .tab {
+  position: absolute;
+  left: -1px;
+  top: 0;
   width: 200px;
   height: 50px;
   display: flex;
   align-items: center;
-  position: relative;
+  z-index: 35;
 }
 
 .tab::before {
@@ -198,9 +201,147 @@
 
 .tab > span {
   position: relative;
+  top: 2px;
   font-weight: 600;
   z-index: 3;
   font-size: 20px;
   padding-left: 32px;
   color: #747474;
+}
+
+.firstCard {
+  position: relative;
+  width: min(794px, calc(100vw - 80px));
+  z-index: 14;
+}
+
+.tabsRow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  transform: translateY(-100%);
+  z-index: 30;
+}
+
+.folderScene {
+  position: relative;
+  width: 100%;
+}
+
+.folderSheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  transform-origin: top;
+  will-change: transform, clip-path;
+}
+
+.folderPocket {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50px - 2px);
+  height: 26px;
+  border-radius: 0 0 16px 16px;
+  z-index: 20;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.secondPocket {
+  background: #FFFFFF;
+  box-shadow: 0 10px 20px rgba(19, 19, 19, 0.16);
+}
+
+.secondSheet {
+  position: absolute;
+  width: calc(100% - 12px);
+  left: 0;
+  right: 0;
+  top: calc(50px - 2px);
+  z-index: 10;
+  will-change: transform;
+}
+
+.secondSheet .cardSecondary {
+  border-top-left-radius: 0;
+}
+
+.linksGroup {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 100%;
+  height: 50px;
+  z-index: 34;
+  pointer-events: none;
+}
+
+.linksGroup > * {
+  pointer-events: auto;
+}
+
+.tab2 {
+  position: absolute;
+  left: 180px;
+  top: 0;
+  cursor: pointer;
+  width: 220px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  z-index: 40;
+}
+
+.tab2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #FFFFFF;
+  -webkit-mask-image: url("/images/1234.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 120% 100%;
+  mask-image: url("/images/1234.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 120% 100%;
+  z-index: 2;
+}
+
+.tab2 > span {
+  position: relative;
+  font-weight: 600;
+  z-index: 3;
+  top: 2px;
+  font-size: 20px;
+  width: calc(100% - 16px);
+  text-align: center;
+  color: #A694C9;
+}
+
+.linksBridge {
+  position: absolute;
+  left: 180px;
+  top: calc(50px - 10px);
+  width: 220px;
+  height: 20px;
+  background: transparent;
+  z-index: 50;
+}
+
+.cardSecondary {
+  width: 100%;
+  height: 100%;
+  max-width: 794px;
+  max-height: 550px;
+  border-radius: 0px 24px 24px 24px;
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  padding: 32px;
+  z-index: 2;
 }

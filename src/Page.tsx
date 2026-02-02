@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react';
-import { motion } from 'framer-motion';
+import { motion, animate, useMotionValue } from 'framer-motion';
 
 import styles from './Page.module.css';
 
@@ -32,12 +32,17 @@ const iconData = iconFiles.map((file, index) => ({
   label: iconLabels[index] ?? `Программа ${index + 1}`,
 }));
 
+const secondSheetTransition = { duration: 0.18, ease: 'easeOut' } as const;
+
 export default function Page() {
   const iconsContainerRef = useRef<HTMLDivElement>(null);
   const containerRectRef = useRef<DOMRect | null>(null);
   const iconRefs = useRef<(HTMLElement | null)[]>([]);
   const iconCentersRef = useRef<number[]>([]);
+  const closeTimerRef = useRef<number | null>(null);
   const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
+  const [isSecondOpen, setIsSecondOpen] = useState(false);
+  const linksY = useMotionValue(0);
 
   const magnification = {
     maxScale: 1.3,
@@ -62,6 +67,36 @@ export default function Page() {
 
   const handleMouseLeave = useCallback(() => {
     setPointer(null);
+  }, []);
+
+  const openSecond = useCallback(() => {
+    if (closeTimerRef.current) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setIsSecondOpen(true);
+  }, []);
+
+  const scheduleCloseSecond = useCallback(() => {
+    if (closeTimerRef.current) {
+      window.clearTimeout(closeTimerRef.current);
+    }
+    closeTimerRef.current = window.setTimeout(() => {
+      setIsSecondOpen(false);
+    }, 80);
+  }, []);
+
+  useEffect(() => {
+    const controls = animate(linksY, isSecondOpen ? -10 : 0, secondSheetTransition);
+    return () => controls.stop();
+  }, [isSecondOpen, linksY]);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -122,56 +157,89 @@ export default function Page() {
     <div className={styles.page}>
       <div className={styles.shape}></div>
 
-      <div className={styles.tab}><span>about me</span></div>
-      <div className={styles.cardPrimary}>
-        <img
-          src="/images/other/Frame 1597878152 (1).png"
-          alt="Alice"
-          loading="lazy"
-          className={styles.alicePhoto}
-          draggable={false}
-        />
+      <div className={styles.firstCard}>
+        <div className={styles.folderScene} style={{ zIndex: 100}}>
+          <div className={styles.cardPrimary}>
+            <img
+              src="/images/other/Frame 1597878152 (1).png"
+              alt="Alice"
+              loading="lazy"
+              className={styles.alicePhoto}
+              draggable={false}
+            />
 
-        <div className={styles.cardPrimaryContent}>
-          <h1>Привет! Меня зовут Алиса, мне 21 год, я графический дизайнер.</h1>
-          <div className={styles.divider}></div>
-          <p>Начала свой путь в дизайне с апреля 2024 года пройдя годовой курс в Яндекс Практикуме. За это время успела поработать над стартапом, в типографии и с другими отдельными проектами.</p>
-          <p>Считаю, что сила в комьюнити, поэтому активно участвую в конкурсах, общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в марафоны, челленджи и воркшопы. Мечтаю посетить все самые значимые ивенты в нашей сфере.</p>
-          <p>По основному образованию я системный администратор с опытом веб-разработки, что даёт мне бонус, в качестве ускоренного изучения новых программ и технического взгляда на многие вещи.</p>
-          <div className={styles.divider}></div>
-          <div
-            ref={iconsContainerRef}
-            className={styles.imagesBlock}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          >
-            {iconData.map((icon, index) => {
-              const scale = getScaleForIcon(index);
-              const lift = (scale - 1) * 14;
+            <div className={styles.cardPrimaryContent}>
+              <h1>Привет! Меня зовут Алиса, мне 21 год, я графический дизайнер.</h1>
+              <div className={styles.divider}></div>
+              <p>Начала свой путь в дизайне с апреля 2024 года пройдя годовой курс в Яндекс Практикуме. За это время успела поработать над стартапом, в типографии и с другими отдельными проектами.</p>
+              <p>Считаю, что сила в комьюнити, поэтому активно участвую в конкурсах, общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в марафоны, челленджи и воркшопы. Мечтаю посетить все самые значимые ивенты в нашей сфере.</p>
+              <p>По основному образованию я системный администратор с опытом веб-разработки, что даёт мне бонус, в качестве ускоренного изучения новых программ и технического взгляда на многие вещи.</p>
+              <div className={styles.divider}></div>
+              <div
+                ref={iconsContainerRef}
+                className={styles.imagesBlock}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+              >
+                {iconData.map((icon, index) => {
+                  const scale = getScaleForIcon(index);
+                  const lift = (scale - 1) * 14;
 
-              return (
-                <div
-                  key={icon.file}
-                  className={styles.iconWrapper}
-                  data-tooltip={icon.label}
-                  aria-label={icon.label}
-                  ref={(element) => {
-                    iconRefs.current[index] = element;
-                  }}
-                >
-                  <motion.img
-                    className={styles.icon}
-                    src={`/images/icons/${icon.file}`}
-                    alt={icon.label}
-                    loading="lazy"
-                    draggable={false}
-                    animate={{ scale, y: -lift }}
-                    transition={{ type: 'tween', duration: 0.12, ease: 'easeOut' }}
-                  />
-                </div>
-              );
-            })}
+                  return (
+                    <div
+                      key={icon.file}
+                      className={styles.iconWrapper}
+                      data-tooltip={icon.label}
+                      aria-label={icon.label}
+                      ref={(element) => {
+                        iconRefs.current[index] = element;
+                      }}
+                    >
+                      <motion.img
+                        className={styles.icon}
+                        src={`/images/icons/${icon.file}`}
+                        alt={icon.label}
+                        loading="lazy"
+                        draggable={false}
+                        animate={{ scale, y: -lift }}
+                        transition={{ type: 'tween', duration: 0.12, ease: 'easeOut' }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
+        </div>
+        <div className={styles.tabsRow}>
+          <div className={styles.tab}><span>about me</span></div>
+          <motion.div className={styles.linksGroup} style={{ y: linksY }}>
+            <div
+              className={styles.tab2}
+              onMouseEnter={openSecond}
+              onMouseLeave={scheduleCloseSecond}
+            >
+              <span>links</span>
+            </div>
+
+            <div
+              className={styles.linksBridge}
+              onMouseEnter={openSecond}
+              onMouseLeave={scheduleCloseSecond}
+              aria-hidden="true"
+            />
+
+            <div
+              className={`${styles.folderSheet} ${styles.secondSheet}`}
+              onMouseEnter={openSecond}
+              onMouseLeave={scheduleCloseSecond}
+              style={{
+                pointerEvents: isSecondOpen ? 'auto' : 'none',
+              }}
+            >
+              <div className={styles.cardSecondary}>123</div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>
