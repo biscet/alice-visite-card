@@ -176,6 +176,7 @@
   position: absolute;
   left: -1px;
   top: 0;
+  user-select: none;
   width: 200px;
   height: 50px;
   display: flex;
@@ -289,6 +290,7 @@
   left: 180px;
   top: 0;
   cursor: pointer;
+  user-select: none;
   width: 220px;
   height: 50px;
   display: flex;
@@ -338,7 +340,7 @@
   height: 100%;
   max-width: 794px;
   max-height: 550px;
-  border-radius: 0px 24px 24px 24px;
+  border-radius: 24px 24px 24px 24px;
   position: relative;
   z-index: 2;
   background: #ffffff;
