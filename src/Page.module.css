@@ -182,10 +182,12 @@
   z-index: 1;
 }
 
-.iconWrapper:hover::after,
-.iconWrapper:focus-within::after {
-  opacity: 1;
-  transform: translate(-50%, 14px);
+@media (hover: hover) {
+  .iconWrapper:hover::after,
+  .iconWrapper:focus-within::after {
+    opacity: 1;
+    transform: translate(-50%, 14px);
+  }
 }
 
 .alicePhoto {
@@ -419,9 +421,11 @@
   position: relative;
 }
 
-.linkButton:hover {
-  border-color: #8B5CF6;
-  color: #8B5CF6;
+@media (hover: hover) {
+  .linkButton:hover {
+    border-color: #8B5CF6;
+    color: #8B5CF6;
+  }
 }
 
 .linkButtonIcon {
@@ -437,8 +441,10 @@
   transition: background-color 0.2s ease;
 }
 
-.linkButton:hover .linkButtonIcon {
-  background-color: #8B5CF6;
+@media (hover: hover) {
+  .linkButton:hover .linkButtonIcon {
+    background-color: #8B5CF6;
+  }
 }
 
 .splitButtons {
@@ -523,6 +529,10 @@
 }
 
 @media (max-width: 600px) {
+  .iconWrapper {
+    pointer-events: none;
+  }
+
   .alicePhoto {
     width: 140px;
     height: 140px;
