@@ -113,6 +113,10 @@ export default function Page() {
   }, []);
 
   const getScaleForIcon = (index: number) => {
+    if (isSwapping) {
+      return magnification.baseScale;
+    }
+
     if (!pointer) {
       return magnification.baseScale;
     }
@@ -192,9 +196,9 @@ export default function Page() {
             animate={
                 activeTab === 'about' 
                     ? 'active' 
-                    : (hoveredTab === 'about' 
-                        ? 'inactiveHover' 
-                        : (isSwapping ? 'inactiveSwap' : 'inactive'))
+                    : (isSwapping 
+                        ? 'inactiveSwap' 
+                        : (hoveredTab === 'about' ? 'inactiveHover' : 'inactive'))
             }
             style={{ 
                 position: 'absolute', 
@@ -280,9 +284,9 @@ export default function Page() {
             animate={
                 activeTab === 'links' 
                     ? 'active' 
-                    : (hoveredTab === 'links' 
-                        ? 'inactiveHover' 
-                        : (isSwapping ? 'inactiveSwap' : 'inactive'))
+                    : (isSwapping 
+                        ? 'inactiveSwap' 
+                        : (hoveredTab === 'links' ? 'inactiveHover' : 'inactive'))
             }
             style={{ 
                 position: 'absolute', 
@@ -302,14 +306,45 @@ export default function Page() {
                 <div 
                     className={styles.tab2} 
                     style={{ 
-                        top: -50, 
+                        top: -49, 
                         position: 'absolute', 
                         cursor: activeTab === 'links' ? 'default' : 'pointer' 
                     }}
                 >
                     <span>links</span>
                 </div>
-                123
+                <div className={styles.linksContainer}>
+                   <a href="https://t.me/akeishapage" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
+                     <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/telegram.svg)`, maskImage: `url(/images/icons/telegram.svg)` }} />
+                     <span>Основной телеграм канал</span>
+                   </a>
+                   
+                   <a href="https://t.me/akeiha_dsgnhack" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
+                     <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/telegram.svg)`, maskImage: `url(/images/icons/telegram.svg)` }} />
+                     <span>Тг-канал с полезностями для дизайна</span>
+                   </a>
+
+                   <div className={styles.splitButtons}>
+                      <a href="https://dprofile.ru/akeiha" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
+                        <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/dpofile.svg)`, maskImage: `url(/images/icons/dpofile.svg)` }} />
+                        <span>Dpofile</span>
+                      </a>
+                      <a href="https://www.behance.net/alisakurlapova" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
+                        <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/behance.svg)`, maskImage: `url(/images/icons/behance.svg)` }} />
+                        <span>Behance</span>
+                      </a>
+                   </div>
+
+                   <a href="https://ru.pinterest.com/akeishapage/" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
+                     <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/pinterest.svg)`, maskImage: `url(/images/icons/pinterest.svg)` }} />
+                     <span>Pinterest</span>
+                   </a>
+
+                   <a href="https://dsgners.ru/Akeiha" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
+                     <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/dysigners.svg)`, maskImage: `url(/images/icons/dysigners.svg)` }} />
+                     <span>Дизайнерс</span>
+                   </a>
+                </div>
              </div>
         </motion.div>
 
