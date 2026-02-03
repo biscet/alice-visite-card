@@ -282,7 +282,7 @@ export default function Page() {
                     <span>about me</span>
                 </div>
                 
-Ф                <img
+               <img
                     src="/images/other/Frame 1597878152 (1).png"
                     alt="Alice"
                     loading="eager"

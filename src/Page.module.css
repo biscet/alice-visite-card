@@ -544,20 +544,25 @@
   }
 
   .firstCard {
-    padding: 16px;
+    padding: 22px;
   }
 
   .cardSecondary {
-    padding: 16px;
+    padding: 22px;
   }
 
   .cardPrimaryContent {
     max-width: 100%;
   }
 
+  .cardPrimary {
+    padding: 22px;
+  }
+
   .tab {
     width: 128px;
     height: 32px;
+    left: 0px;
     top: -32px;
   }
   
