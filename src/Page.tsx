@@ -222,6 +222,11 @@ export default function Page() {
         times: [0, 0.5, 1]
       }
     },
+    idle: {
+      y: 0,
+      rotate: 0,
+      scale: 1
+    },
     inactive: {
       y: isMobile ? -2 : 0,
       rotate: 0,
@@ -264,10 +269,10 @@ export default function Page() {
         {/* About Card Group */}
         <motion.div
             variants={cardVariants}
-            initial="active"
+            initial="idle"
             animate={
                 activeTab === 'about' 
-                    ? 'active' 
+                    ? (isSwapping ? 'active' : 'idle')
                     : (isSwapping 
                         ? 'inactiveSwap' 
                         : (hoveredTab === 'about' ? 'inactiveHover' : 'inactive'))
@@ -362,7 +367,7 @@ export default function Page() {
             initial="inactive"
             animate={
                 activeTab === 'links' 
-                    ? 'active' 
+                    ? (isSwapping ? 'active' : 'idle')
                     : (isSwapping 
                         ? 'inactiveSwap' 
                         : (hoveredTab === 'links' ? 'inactiveHover' : 'inactive'))
