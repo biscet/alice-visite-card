@@ -12,7 +12,7 @@ const iconFiles = [
   'image 242.png',
   'gemini.png',
   '69b375c9f4ebeac5d1e986b45de38cfb2f089c09.png',
-  'be0566d4c4d7618c0f3c43af8fe4a0eb73401bd6.png',
+  'tilda.png',
 ];
 
 const iconLabels = [
@@ -322,7 +322,6 @@ export default function Page() {
                           }}
                         >
                           <picture>
-                            <source srcSet={encodeURI(`/images/icons/${icon.file.replace('.png', '.webp')}`)} type="image/webp" />
                             <motion.img
                               className={styles.icon}
                               src={`/images/icons/${icon.file}`}
