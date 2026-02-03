@@ -213,7 +213,7 @@ export default function Page() {
 
   const cardVariants: Variants = {
     active: {
-      y: [null, isMobile ? -360 : -450, 0],
+      y: [null, isMobile ? -400 : -450, 0],
       scale: [null, 1.05, 1],
       rotate: [null, -8, 0],
       transition: { 
@@ -237,7 +237,7 @@ export default function Page() {
       }
     },
     inactiveSwap: {
-      y: [null, isMobile ? 180 : 280, 0],
+      y: [null, isMobile ? 220 : 280, 0],
       rotate: [null, 8, 0],
       scale: 1,
       transition: { 
