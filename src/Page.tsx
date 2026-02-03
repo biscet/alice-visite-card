@@ -285,7 +285,10 @@ export default function Page() {
                 height: '100%',
                 transformOrigin: 'bottom center',
                 zIndex: getZIndex('about'),
-                cursor: activeTab === 'about' ? 'auto' : 'pointer'
+                cursor: activeTab === 'about' ? 'auto' : 'pointer',
+                willChange: 'transform',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
             }}
             onClick={() => handleTabClick('about')}
             onMouseEnter={() => setHoveredTab('about')}
@@ -380,7 +383,10 @@ export default function Page() {
                 height: '100%',
                 transformOrigin: 'bottom center', 
                 zIndex: getZIndex('links'),
-                cursor: activeTab === 'links' ? 'auto' : 'pointer'
+                cursor: activeTab === 'links' ? 'auto' : 'pointer',
+                willChange: 'transform',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
             }}
             onClick={() => handleTabClick('links')}
             onMouseEnter={() => setHoveredTab('links')}

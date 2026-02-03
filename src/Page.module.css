@@ -203,13 +203,11 @@
   100% {
     transform: scale(0.98);
     opacity: 0.85;
-    filter: blur(240px);
   }
 
   50% {
     transform: scale(1.04);
     opacity: 1;
-    filter: blur(260px);
   }
 }
 
