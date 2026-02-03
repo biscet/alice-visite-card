@@ -26,6 +26,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :global(body) {
@@ -36,21 +37,26 @@
   background-color: var(--bg-outer);
   padding: 20px;
   display: flex;
+  padding: 60px;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .page {
   min-height: 100%;
   position: relative;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cardPrimary {
   width: 100%;
   height: 100%;
   max-width: 794px;
-  max-height: 550px;
+  max-height: 525px;
   border-radius: 0px 24px 24px 24px;
   position: relative;
   z-index: 2;
@@ -58,11 +64,14 @@
   color: var(--text-primary);
   padding: 32px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardPrimary h1 {
   font-size: 24px;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .cardPrimary p {
@@ -88,15 +97,41 @@
 .cardPrimaryContent {
   width: 100%;
   max-width: calc(100% - 162px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.scrollableText {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.scrollableText::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollableText::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.scrollableText::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
 }
 
 .divider {
   width: 100%;
   height: 1px;
   background: var(--divider);
+  flex-shrink: 0;
 }
 
 .imagesBlock {
@@ -107,6 +142,7 @@
   position: relative;
   padding: 6px 0;
   cursor: default;
+  flex-shrink: 0;
 }
 
 .icon {
@@ -135,6 +171,9 @@
   left: 50%;
   transform: translate(-50%, 8px);
   color: rgba(255, 255, 255, 0.9);
+  background: #1F1F1F;
+  padding: 4px 8px;
+  border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
@@ -175,7 +214,7 @@
 .tab {
   position: absolute;
   left: -1px;
-  top: 0;
+  top: -50px;
   user-select: none;
   width: 200px;
   height: 50px;
@@ -188,6 +227,7 @@
   content: "";
   position: absolute;
   inset: 0;
+  bottom: -1px;
   background: #1F1F1F;
   -webkit-mask-image: url("/images/123.svg");
   -webkit-mask-repeat: no-repeat;
@@ -288,7 +328,7 @@
 .tab2 {
   position: absolute;
   left: 180px;
-  top: 0;
+  top: -49px;
   cursor: pointer;
   user-select: none;
   width: 220px;
@@ -339,7 +379,7 @@
   width: 100%;
   height: 100%;
   max-width: 794px;
-  max-height: 550px;
+  max-height: 525px;
   border-radius: 24px 24px 24px 24px;
   position: relative;
   z-index: 2;
@@ -409,4 +449,145 @@
 
 .splitButtons .linkButton {
   flex: 1;
+}
+
+@media (max-width: 720px) {
+  .splitButtons {
+    flex-direction: column;
+  }
+
+  .linkButton {
+    height: 31px;
+    font-size: 16px;
+  }
+
+  .splitButtons .linkButton {
+    flex: 0 0 auto;
+  }
+
+  .linkButtonIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cardPrimary h1 {
+    font-size: 15px;
+  }
+
+  .cardPrimary p {
+    font-size: 15px;
+  }
+
+  .icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px; /* Slightly adjusted radius for smaller icon */
+  }
+
+  .imagesBlock {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+
+  .tab {
+    width: 150px;
+    height: 40px;
+    top: -40px;
+  }
+  
+  .tab > span {
+    font-size: 16px;
+    padding-left: 24px;
+    top: 1px;
+  }
+
+  .tab2 {
+    width: 170px;
+    height: 40px;
+    top: -39px;
+    left: 135px;
+  }
+
+  .linksBridge {
+    left: 135px;
+    top: calc(40px - 10px);
+    width: 170px;
+  }
+
+  .tab2 > span {
+    font-size: 16px;
+    top: 1px;
+  }
+}
+
+@media (max-width: 600px) {
+  .alicePhoto {
+    width: 140px;
+    height: 140px;
+    right: -25px;
+    top: -25px;
+  }
+
+  .cardPrimaryContent {
+    max-width: calc(100% - 90px);
+  }
+}
+
+@media (max-width: 480px) {
+  .alicePhoto {
+    width: 90px;
+    height: 90px;
+    right: -25px;
+    top: -25px;
+  }
+
+  .firstCard {
+    padding: 16px;
+  }
+
+  .cardSecondary {
+    padding: 16px;
+  }
+
+  .cardPrimaryContent {
+    max-width: 100%;
+  }
+
+  .tab {
+    width: 128px;
+    height: 32px;
+    top: -32px;
+  }
+  
+  .tab > span {
+    font-size: 13px;
+    padding-left: 22px;
+    top: 1px;
+  }
+  
+  .tab2 {
+    width: 141px;
+    height: 32px;
+    top: -31px;
+    left: 115px;
+  }
+  
+  .tab2 > span {
+    font-size: 13px;
+    top: 1px;
+    left: 3px;
+  }
+
+  .linksBridge {
+    left: 115px;
+    top: calc(32px - 7px);
+    width: 141px;
+    height: 13px;
+  }
+}
+
+@media (max-width: 860px) {
+  /* Scrollable text styles are now global (flex: 1), removing specific max-height if not needed or keeping minimal */
 }

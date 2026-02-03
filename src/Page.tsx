@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type MouseEvent, type SyntheticEvent } from 'react';
 import { motion, type Variants } from 'framer-motion';
 
 import styles from './Page.module.css';
@@ -32,6 +32,19 @@ const iconData = iconFiles.map((file, index) => ({
   label: iconLabels[index] ?? `Программа ${index + 1}`,
 }));
 
+const linkIcons = [
+  'telegram.svg',
+  'dpofile.svg',
+  'behance.svg',
+  'pinterest.svg',
+  'dysigners.svg',
+];
+
+const maskIcons = [
+  '123.svg',
+  '1234.svg'
+];
+
 export default function Page() {
   const iconsContainerRef = useRef<HTMLDivElement>(null);
   const containerRectRef = useRef<DOMRect | null>(null);
@@ -42,6 +55,45 @@ export default function Page() {
   const [topZIndexTab, setTopZIndexTab] = useState<'about' | 'links'>('about');
   const [hoveredTab, setHoveredTab] = useState<'about' | 'links' | null>(null);
   const [isSwapping, setIsSwapping] = useState(false);
+
+  // Loading state
+  const [areExternalResourcesLoaded, setAreExternalResourcesLoaded] = useState(false);
+  const [loadedImageCount, setLoadedImageCount] = useState(0);
+  
+  // Total images to wait for via onLoad: Alice photo + 9 icons = 10.
+  const totalMainImages = 1 + iconFiles.length; 
+
+  useEffect(() => {
+    const loadResources = async () => {
+      try {
+        // Preload SVGs (links + masks)
+        const allSvgs = [...linkIcons.map(i => `/images/icons/${i}`), ...maskIcons.map(i => `/images/${i}`)];
+        const svgPromises = allSvgs.map(src => new Promise((resolve) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = resolve;
+            img.onerror = resolve; // proceed anyway
+        }));
+
+        // Wait for fonts
+        const fontPromise = document.fonts.ready;
+
+        await Promise.all([...svgPromises, fontPromise]);
+      } catch (e) {
+        console.error("Resource loading error", e);
+      } finally {
+        setAreExternalResourcesLoaded(true);
+      }
+    };
+    
+    loadResources();
+  }, []);
+
+  const handleImageLoad = (e: SyntheticEvent<HTMLImageElement>) => {
+    setLoadedImageCount(prev => prev + 1);
+  };
+
+  const isPageReady = areExternalResourcesLoaded && loadedImageCount >= totalMainImages;
 
   const handleTabClick = (tab: 'about' | 'links') => {
     if (activeTab === tab) return;
@@ -159,7 +211,7 @@ export default function Page() {
     inactive: {
       y: 0,
       rotate: 0,
-      scale: 1,
+      scale: 0.995,
       transition: { 
         duration: 0.8, 
         ease: "easeInOut"
@@ -184,7 +236,13 @@ export default function Page() {
   };
 
   return (
-    <div className={styles.page}>
+    <div 
+      className={styles.page} 
+      style={{ 
+        opacity: isPageReady ? 1 : 0, 
+        transition: 'opacity 0.5s ease' 
+      }}
+    >
       <div className={styles.shape}></div>
 
       <div className={styles.firstCard} style={{ position: 'relative', height: 550 }}>
@@ -218,27 +276,33 @@ export default function Page() {
                 <div 
                     className={styles.tab} 
                     style={{ 
-                        top: -50, 
-                        position: 'absolute', 
                         cursor: activeTab === 'about' ? 'default' : 'pointer' 
                     }}
                 >
                     <span>about me</span>
                 </div>
-                <img
-                  src="/images/other/Frame 1597878152 (1).png"
-                  alt="Alice"
-                  loading="lazy"
-                  className={styles.alicePhoto}
-                  draggable={false}
-                />
+                
+                <picture>
+                  <source srcSet={encodeURI("/images/other/Frame 1597878152 (1).webp")} type="image/webp" />
+                  <img
+                    src="/images/other/Frame 1597878152 (1).png"
+                    alt="Alice"
+                    loading="eager"
+                    className={styles.alicePhoto}
+                    draggable={false}
+                    onLoad={handleImageLoad}
+                    onError={handleImageLoad}
+                  />
+                </picture>
 
                 <div className={styles.cardPrimaryContent}>
                   <h1>Привет! Меня зовут Алиса, мне 21 год, я графический дизайнер.</h1>
                   <div className={styles.divider}></div>
-                  <p>Начала свой путь в дизайне с апреля 2024 года пройдя годовой курс в Яндекс Практикуме. За это время успела поработать над стартапом, в типографии и с другими отдельными проектами.</p>
-                  <p>Считаю, что сила в комьюнити, поэтому активно участвую в конкурсах, общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в марафоны, челленджи и воркшопы. Мечтаю посетить все самые значимые ивенты в нашей сфере.</p>
-                  <p>По основному образованию я системный администратор с опытом веб-разработки, что даёт мне бонус, в качестве ускоренного изучения новых программ и технического взгляда на многие вещи.</p>
+                  <div className={styles.scrollableText}>
+                    <p>Начала свой путь в дизайне с апреля 2024 года пройдя годовой курс в Яндекс Практикуме. За это время успела поработать над стартапом, в типографии и с другими отдельными проектами.</p>
+                    <p>Считаю, что сила в комьюнити, поэтому активно участвую в конкурсах, общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в марафоны, челленджи и воркшопы. Мечтаю посетить все самые значимые ивенты в нашей сфере.</p>
+                    <p>По основному образованию я системный администратор с опытом веб-разработки, что даёт мне бонус, в качестве ускоренного изучения новых программ и технического взгляда на многие вещи.</p>
+                  </div>
                   <div className={styles.divider}></div>
                   <div
                     ref={iconsContainerRef}
@@ -260,15 +324,20 @@ export default function Page() {
                             iconRefs.current[index] = element;
                           }}
                         >
-                          <motion.img
-                            className={styles.icon}
-                            src={`/images/icons/${icon.file}`}
-                            alt={icon.label}
-                            loading="lazy"
-                            draggable={false}
-                            animate={{ scale, y: -lift }}
-                            transition={{ type: 'tween', duration: 0.12, ease: 'easeOut' }}
-                          />
+                          <picture>
+                            <source srcSet={encodeURI(`/images/icons/${icon.file.replace('.png', '.webp')}`)} type="image/webp" />
+                            <motion.img
+                              className={styles.icon}
+                              src={`/images/icons/${icon.file}`}
+                              alt={icon.label}
+                              loading="eager"
+                              draggable={false}
+                              animate={{ scale, y: -lift }}
+                              transition={{ type: 'tween', duration: 0.12, ease: 'easeOut' }}
+                              onLoad={handleImageLoad}
+                              onError={handleImageLoad}
+                            />
+                          </picture>
                         </div>
                       );
                     })}
@@ -306,8 +375,6 @@ export default function Page() {
                 <div 
                     className={styles.tab2} 
                     style={{ 
-                        top: -49, 
-                        position: 'absolute', 
                         cursor: activeTab === 'links' ? 'default' : 'pointer' 
                     }}
                 >
@@ -316,12 +383,12 @@ export default function Page() {
                 <div className={styles.linksContainer}>
                    <a href="https://t.me/akeishapage" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
                      <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/telegram.svg)`, maskImage: `url(/images/icons/telegram.svg)` }} />
-                     <span>Основной телеграм канал</span>
+                     <span>Основной тг-канал</span>
                    </a>
                    
                    <a href="https://t.me/akeiha_dsgnhack" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
                      <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/telegram.svg)`, maskImage: `url(/images/icons/telegram.svg)` }} />
-                     <span>Тг-канал с полезностями для дизайна</span>
+                     <span>Полезный тг-канал</span>
                    </a>
 
                    <div className={styles.splitButtons}>
