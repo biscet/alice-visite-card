@@ -55,6 +55,20 @@ export default function Page() {
   const [topZIndexTab, setTopZIndexTab] = useState<'about' | 'links'>('about');
   const [hoveredTab, setHoveredTab] = useState<'about' | 'links' | null>(null);
   const [isSwapping, setIsSwapping] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // Loading state
   const [areExternalResourcesLoaded, setAreExternalResourcesLoaded] = useState(false);
@@ -199,7 +213,7 @@ export default function Page() {
 
   const cardVariants: Variants = {
     active: {
-      y: [null, -450, 0],
+      y: [null, isMobile ? -360 : -450, 0],
       scale: [null, 1.05, 1],
       rotate: [null, -8, 0],
       transition: { 
@@ -209,7 +223,7 @@ export default function Page() {
       }
     },
     inactive: {
-      y: 0,
+      y: isMobile ? -2 : 0,
       rotate: 0,
       scale: 0.995,
       transition: { 
@@ -218,7 +232,7 @@ export default function Page() {
       }
     },
     inactiveSwap: {
-      y: [null, 280, 0],
+      y: [null, isMobile ? 180 : 280, 0],
       rotate: [null, 8, 0],
       scale: 1,
       transition: { 
@@ -245,7 +259,7 @@ export default function Page() {
     >
       <div className={styles.shape}></div>
 
-      <div className={styles.firstCard} style={{ position: 'relative', height: 550 }}>
+      <div className={styles.firstCard} style={{ position: 'relative', height: isMobile ? 500 : 550 }}>
         
         {/* About Card Group */}
         <motion.div
