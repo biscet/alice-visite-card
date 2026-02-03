@@ -282,9 +282,7 @@ export default function Page() {
                     <span>about me</span>
                 </div>
                 
-                <picture>
-                  <source srcSet={encodeURI("/images/other/Frame 1597878152 (1).webp")} type="image/webp" />
-                  <img
+Ф                <img
                     src="/images/other/Frame 1597878152 (1).png"
                     alt="Alice"
                     loading="eager"
@@ -293,7 +291,6 @@ export default function Page() {
                     onLoad={handleImageLoad}
                     onError={handleImageLoad}
                   />
-                </picture>
 
                 <div className={styles.cardPrimaryContent}>
                   <h1>Привет! Меня зовут Алиса, мне 21 год, я графический дизайнер.</h1>
