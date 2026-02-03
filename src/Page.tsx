@@ -228,7 +228,7 @@ export default function Page() {
       scale: 1
     },
     inactive: {
-      y: isMobile ? -2 : 0,
+      y: -2,
       rotate: 0,
       scale: 0.995,
       transition: { 
@@ -237,7 +237,7 @@ export default function Page() {
       }
     },
     inactiveSwap: {
-      y: [null, isMobile ? 220 : 280, 0],
+      y: [null, isMobile ? 220 : 280, -2],
       rotate: [null, 8, 0],
       scale: 1,
       transition: { 

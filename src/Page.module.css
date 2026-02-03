@@ -213,8 +213,8 @@
 
 .tab {
   position: absolute;
-  left: -1px;
   top: -50px;
+  left: 0;
   user-select: none;
   width: 200px;
   height: 50px;
@@ -532,10 +532,10 @@
   }
 
   .alicePhoto {
-    width: 140px;
-    height: 140px;
-    right: -25px;
-    top: -25px;
+    width: 162px;
+    height: 193px;
+    right: -35px;
+    top: -45px;
   }
 
   .cardPrimaryContent {
@@ -552,8 +552,8 @@
 
 @media (max-width: 480px) {
   .alicePhoto {
-    width: 90px;
-    height: 90px;
+    width: 102px;
+    height: 123px;
     right: -25px;
     top: -25px;
   }
