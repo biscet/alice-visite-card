@@ -394,7 +394,7 @@ export default function Page() {
                    <div className={styles.splitButtons}>
                       <a href="https://dprofile.ru/akeiha" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
                         <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/dpofile.svg)`, maskImage: `url(/images/icons/dpofile.svg)` }} />
-                        <span>Dpofile</span>
+                        <span>Dprofile</span>
                       </a>
                       <a href="https://www.behance.net/alisakurlapova" className={styles.linkButton} target="_blank" rel="noopener noreferrer">
                         <div className={styles.linkButtonIcon} style={{ WebkitMaskImage: `url(/images/icons/behance.svg)`, maskImage: `url(/images/icons/behance.svg)` }} />
