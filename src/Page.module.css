@@ -533,6 +533,13 @@
   .cardPrimaryContent {
     max-width: calc(100% - 90px);
   }
+
+  .shape {
+    filter: blur(60px);
+    animation: none;
+    height: calc(100% + 20px);
+    top: -20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -565,6 +572,11 @@
     left: 0px;
     top: -32px;
   }
+
+  .cardPrimary h1 {
+    max-width: calc(100% - 40px);
+  }
+
   
   .tab > span {
     font-size: 13px;
