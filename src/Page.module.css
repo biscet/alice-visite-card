@@ -146,8 +146,8 @@
 }
 
 .icon {
-  width: 48px;
-  height: 48px;
+  width: 96px;
+  height: 96px;
   object-fit: cover;
   border-radius: 12px;
   user-select: none;
@@ -160,7 +160,19 @@
 
 .iconWrapper {
   position: relative;
-  display: inline-flex;
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  vertical-align: bottom; /* Чтобы выровнять врапперы по низу строки, если что */
+}
+
+@media (max-width: 720px) {
+  .iconWrapper {
+    width: 34px;
+    height: 34px;
+  }
 }
 
 .iconWrapper::after {
@@ -187,6 +199,18 @@
   .iconWrapper:focus-within::after {
     opacity: 1;
     transform: translate(-50%, 14px);
+  }
+}
+
+.textLink {
+  color: inherit;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .textLink:hover {
+    color: #8B5CF6;
   }
 }
 
@@ -483,8 +507,8 @@
   }
 
   .icon {
-    width: 34px;
-    height: 34px;
+    width: 68px;
+    height: 68px;
     border-radius: 8px; /* Slightly adjusted radius for smaller icon */
   }
 

@@ -4,15 +4,15 @@ import { motion, type Variants } from 'framer-motion';
 import styles from './Page.module.css';
 
 const iconFiles = [
-  '48a907afa67c599b291775367e80fa0336b61061.png',
-  '320cca232dd45144bb7789abca8bbb4c56ffac9b.png',
-  '1c5dcb31ef04d04b6cd511adc2a4435d42c165e5.png',
-  '34d406fa66a3ff76480bbf2c2003e8da22e2a704.png',
-  '87b83e428c4e9efe2b1020730dd56c55cef097c9.png',
-  'image 242.png',
-  'gemini.png',
-  '69b375c9f4ebeac5d1e986b45de38cfb2f089c09.png',
-  'tilda.png',
+  'ai.svg',
+  'ps.svg',
+  'id.svg',
+  'ae.svg',
+  'figma.svg',
+  'gpt.svg',
+  'gemini.svg',
+  'coler.svg',
+  'tilda.svg',
 ];
 
 const iconLabels = [
@@ -56,10 +56,13 @@ export default function Page() {
   const [hoveredTab, setHoveredTab] = useState<'about' | 'links' | null>(null);
   const [isSwapping, setIsSwapping] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 600);
+      const width = window.innerWidth;
+      setIsMobile(width <= 600);
+      setIsSmallScreen(width <= 720);
     };
 
     handleResize();
@@ -123,7 +126,7 @@ export default function Page() {
   };
 
   const magnification = {
-    maxScale: 1.3,
+    maxScale: 1.2,
     baseScale: 1,
     radius: 100,
   };
@@ -318,8 +321,8 @@ export default function Page() {
                   <h1>Привет! Меня зовут Алиса, мне 21 год, я графический дизайнер.</h1>
                   <div className={styles.divider}></div>
                   <div className={styles.scrollableText}>
-                    <p>Начала свой путь в дизайне с апреля 2024 года пройдя годовой курс в Яндекс Практикуме. За это время успела поработать над стартапом, в типографии и с другими отдельными проектами.</p>
-                    <p>Считаю, что сила в комьюнити, поэтому активно участвую в конкурсах, общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в марафоны, челленджи и воркшопы. Мечтаю посетить все самые значимые ивенты в нашей сфере.</p>
+                    <p>Начала свой путь в дизайне с апреля 2024 года пройдя годовой курс в <a href="https://t.me/akeishapage/792" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Яндекс Практикуме</a>. За это время успела поработать над стартапом, в <a href="https://t.me/akeishapage/801" target="_blank" rel="noopener noreferrer" className={styles.textLink}>типографии</a> и с другими отдельными проектами.</p>
+                    <p>Считаю, что сила в комьюнити, поэтому активно участвую в <a href="https://t.me/akeishapage/942" target="_blank" rel="noopener noreferrer" className={styles.textLink}>конкурсах</a>, общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в <a href="https://t.me/akeishapage/998" target="_blank" rel="noopener noreferrer" className={styles.textLink}>марафоны</a>, <a href="https://t.me/akeishapage/920" target="_blank" rel="noopener noreferrer" className={styles.textLink}>челленджи</a> и <a href="https://t.me/akeishapage/867" target="_blank" rel="noopener noreferrer" className={styles.textLink}>воркшопы</a>. Мечтаю посетить все самые значимые <a href="https://t.me/akeishapage/819" target="_blank" rel="noopener noreferrer" className={styles.textLink}>ивенты</a> в нашей сфере.</p>
                     <p>По основному образованию я системный администратор с опытом веб-разработки, что даёт мне бонус, в качестве ускоренного изучения новых программ и технического взгляда на многие вещи.</p>
                   </div>
                   <div className={styles.divider}></div>
@@ -332,6 +335,7 @@ export default function Page() {
                     {iconData.map((icon, index) => {
                       const scale = getScaleForIcon(index);
                       const lift = (scale - 1) * 14;
+                      const finalScale = scale * 0.5;
 
                       return (
                         <div
@@ -339,6 +343,7 @@ export default function Page() {
                           className={styles.iconWrapper}
                           data-tooltip={icon.label}
                           aria-label={icon.label}
+                          style={{ zIndex: Math.round(scale * 100) }}
                           ref={(element) => {
                             iconRefs.current[index] = element;
                           }}
@@ -350,7 +355,10 @@ export default function Page() {
                               alt={icon.label}
                               loading="eager"
                               draggable={false}
-                              animate={{ scale, y: -lift }}
+                              animate={{ 
+                                scale: finalScale, 
+                                y: -lift 
+                              }}
                               transition={{ type: 'tween', duration: 0.12, ease: 'easeOut' }}
                               onLoad={handleImageLoad}
                               onError={handleImageLoad}
