@@ -318,7 +318,7 @@ export default function Page() {
                   />
 
                 <div className={styles.cardPrimaryContent}>
-                  <h1>Привет! Меня зовут Алиса, мне 21 год, я графический дизайнер.</h1>
+                  <h1>Привет! Меня зовут Алиса, мне 22 года, я графический дизайнер.</h1>
                   <div className={styles.divider}></div>
                   <div className={styles.scrollableText}>
                     <p>Начала свой путь в дизайне с апреля 2024 года пройдя годовой курс в <a href="https://t.me/akeishapage/792" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Яндекс Практикуме</a>. За это время успела поработать над стартапом, в <a href="https://t.me/akeishapage/801" target="_blank" rel="noopener noreferrer" className={styles.textLink}>типографии</a> и с другими отдельными проектами.</p>
