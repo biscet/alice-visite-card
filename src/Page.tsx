@@ -344,7 +344,7 @@ export default function Page() {
               <div className={styles.scrollableText}>
                 <p>
                   Начала свой путь в дизайне с апреля 2024 года пройдя годовой
-                  курс в 
+                  курс в{" "}
                   <a
                     href="https://t.me/akeishapage/792"
                     target="_blank"
@@ -353,7 +353,7 @@ export default function Page() {
                   >
                     Яндекс Практикуме
                   </a>
-                  . За это время успела поработать над стартапом, в 
+                  . За это время успела поработать над стартапом, в{" "}
                   <a
                     href="https://t.me/akeishapage/801"
                     target="_blank"
@@ -365,7 +365,7 @@ export default function Page() {
                   и с другими отдельными проектами.
                 </p>
                 <p>
-                  Считаю, что сила в комьюнити, поэтому активно участвую в 
+                  Считаю, что сила в комьюнити, поэтому активно участвую в{" "}
                   <a
                     href="https://t.me/akeishapage/942"
                     target="_blank"
@@ -374,16 +374,8 @@ export default function Page() {
                   >
                     конкурсах
                   </a>
-                  , общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в 
-                  <a
-                    href="https://t.me/akeishapage/998"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.textLink}
-                  >
-                    марафоны
-                  </a>
-                  ,{" "}
+                  , общаюсь с коллегами и слежу за дизайн-сферой. Вписываюсь в{" "}
+                  марафоны,{" "}
                   <a
                     href="https://t.me/akeishapage/920"
                     target="_blank"
@@ -392,7 +384,7 @@ export default function Page() {
                   >
                     челленджи
                   </a>{" "}
-                  и 
+                  и{" "}
                   <a
                     href="https://t.me/akeishapage/867"
                     target="_blank"
